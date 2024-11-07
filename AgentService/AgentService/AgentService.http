@@ -1,4 +1,4 @@
-@AgentService_HostAddress = http://localhost:5121
+@AgentService_HostAddress = http://localhost:5037
 
 GET {{AgentService_HostAddress}}/weatherforecast/
 Accept: application/json

@@ -3,4 +3,4 @@
     image: agentservice
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: AgentService/Dockerfile
