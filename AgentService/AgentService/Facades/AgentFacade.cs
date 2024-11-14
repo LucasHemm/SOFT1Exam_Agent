@@ -142,40 +142,10 @@ namespace AgentService.Facades
             return agent;
         }
 
-        // public Agent UpdateAgentStatus(int agentId, string newStatus)
-        // {
-        //     // Retrieve the agent from the database by Id
-        //     var agent = _context.Agents.FirstOrDefault(a => a.Id == agentId);
-        //
-        //     // Check if the agent exists
-        //     if (agent == null)
-        //     {
-        //         throw new Exception("Agent not found");
-        //     }
-        //
-        //     // Ensure the new status is valid
-        //     var validStatuses = new List<string> { "Active", "Inactive", "Delivering" };
-        //     if (!validStatuses.Contains(newStatus))
-        //     {
-        //         throw new Exception("Invalid status. Valid statuses are Active, Inactive, and Delivering.");
-        //     }
-        //
-        //     // Enforce the rule: if the agent is "Delivering", they cannot be set to "Inactive" or vice versa
-        //     if ((agent.Status == "Delivering" && newStatus == "Inactive") ||
-        //         (agent.Status == "Inactive" && newStatus == "Delivering"))
-        //     {
-        //         throw new Exception("An agent cannot be set to Inactive from Delivering or vice versa.");
-        //     }
-        //
-        //     // Update the agent's status
-        //     agent.Status = newStatus;
-        //
-        //     // Save changes to the database
-        //     _context.SaveChanges();
-        //
-        //     return agent;
-        // }
-
-        
+        // get all agents
+        public List<Agent> GetAllAgents()
+        {
+            return _context.Agents.ToList();
+        }
     }
 }

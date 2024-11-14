@@ -232,5 +232,49 @@ namespace AgentServiceTests
                 Assert.Equal("Inactive", retrievedAgent.Status);
             }
         }
+        
+        //Get all agents, by getting a list of multiple agents
+        [Fact]
+        public void ShouldGetAllAgents()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlServer(_connectionString)
+                .Options;
+
+            using (var context = new ApplicationDbContext(options))
+            {
+                AgentFacade agentFacade = new AgentFacade(context);
+
+                AgentDTO agentDto1 = new AgentDTO
+                {
+                    Name = "John Doe",
+                    PhoneNumber = 12345678,
+                    AccountNumber = "123-456-789",
+                    Status = "Active",
+                    Region = "North",
+                    Rating = 4.7,
+                    NumberOfRatings = 150
+                };
+
+                AgentDTO agentDto2 = new AgentDTO
+                {
+                    Name = "Jane Smith",
+                    PhoneNumber = 87654321,
+                    AccountNumber = "987-654-321",
+                    Status = "Active",
+                    Region = "South",
+                    Rating = 4.5,
+                    NumberOfRatings = 100
+                };
+
+                agentFacade.CreateAgent(agentDto1);
+                agentFacade.CreateAgent(agentDto2);
+
+                var agents = agentFacade.GetAllAgents();
+
+                Assert.NotNull(agents);
+                Assert.Equal(2, agents.Count);
+            }
+        }
     }
 }
