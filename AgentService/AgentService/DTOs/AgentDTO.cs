@@ -4,7 +4,7 @@ namespace AgentService.DTOs;
 
 public class AgentDTO
 {
-    public int Id { get; set; }
+    public int Id { get; set; } //primary key
     public String Name { get; set; }
     public int PhoneNumber { get; set; }
     public String AccountNumber { get; set; }
