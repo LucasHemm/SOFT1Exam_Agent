@@ -1,6 +1,181 @@
-﻿namespace AgentService.Facades;
+﻿using Microsoft.EntityFrameworkCore;
+using AgentService.DTOs;
+using AgentService.Models;
 
-public class AgentFacade
+namespace AgentService.Facades
 {
-    
+    public class AgentFacade
+    {
+        private readonly ApplicationDbContext _context;
+
+        public AgentFacade(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        // public Agent CreateAgent(AgentDTO agentDto)
+        // {
+        //     if (string.IsNullOrWhiteSpace(agentDto.Name) || string.IsNullOrWhiteSpace(agentDto.Region) || agentDto.PhoneNumber == 0)
+        //     {
+        //         throw new Exception("All mandatory fields (Name, PhoneNumber, Region) must be provided.");
+        //     }
+        //
+        //     Agent agent = new Agent(agentDto);
+        //     _context.Agents.Add(agent);
+        //     _context.SaveChanges();
+        //     return agent;
+        // }
+        
+        public Agent CreateAgent(AgentDTO agentDto)
+        {
+            if (string.IsNullOrWhiteSpace(agentDto.Name) || string.IsNullOrWhiteSpace(agentDto.Region) || agentDto.PhoneNumber == 0)
+            {
+                throw new Exception("All mandatory fields (Name, PhoneNumber, Region) must be provided.");
+            }
+
+            // Generate a unique AgentId for new agents
+            string GenerateAgentId()
+            {
+                Random random = new Random();
+                string digits = random.Next(1000, 9999).ToString();
+                string letters = new string(Enumerable.Range(0, 4).Select(_ => (char)random.Next('A', 'Z' + 1)).ToArray());
+                return digits + letters;
+            }
+
+            agentDto.AgentId = GenerateAgentId();
+            while (_context.Agents.Any(a => a.AgentId == agentDto.AgentId))
+            {
+                agentDto.AgentId = GenerateAgentId();
+            }
+
+            // Create agent without setting Id explicitly
+            Agent agent = new Agent(agentDto);
+            _context.Agents.Add(agent);
+            _context.SaveChanges();
+
+            return agent;
+        }
+
+
+        public Agent GetAgent(int id)
+        {
+            Agent agent = _context.Agents.FirstOrDefault(a => a.Id == id);
+            if (agent == null)
+            {
+                throw new Exception("Agent not found");
+            }
+            return agent;
+        }
+        
+        public Agent UpdateAgent(AgentDTO agentDto)
+        {
+            // Retrieve the agent from the database by Id
+            var agent = _context.Agents.FirstOrDefault(a => a.Id == agentDto.Id);
+
+            // Check if the agent exists
+            if (agent == null)
+            {
+                throw new Exception("Agent not found");
+            }
+
+            // Update only the allowed properties
+            agent.Name = agentDto.Name;
+            agent.PhoneNumber = agentDto.PhoneNumber;
+            agent.AccountNumber = agentDto.AccountNumber;
+            agent.Region = agentDto.Region;
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            return agent;
+        }
+
+        public Agent UpdateAgentWithRating(UpdateRatingAgentDTO updateRatingAgentDto)
+        {
+            // Retrieve the agent from the database by Id
+            var agent = _context.Agents.FirstOrDefault(a => a.Id == updateRatingAgentDto.Id);
+
+            // Check if the agent exists
+            if (agent == null)
+            {
+                throw new Exception("Agent not found");
+            }
+
+            // Update only the allowed properties
+            agent.Rating = updateRatingAgentDto.Rating;
+            agent.NumberOfRatings = updateRatingAgentDto.NumberOfRatings;
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            return agent;
+        }
+        
+        //Update the agent status
+        public Agent UpdateAgentStatus(UpdateStatusAgentDTO updateStatusAgentDto)
+        {
+            // Retrieve the agent from the database by Id
+            var agent = _context.Agents.FirstOrDefault(a => a.Id == updateStatusAgentDto.Id);
+
+            // Check if the agent exists
+            if (agent == null)
+            {
+                throw new Exception("Agent not found");
+            }
+
+            // Enforce rules for status change
+            if (agent.Status == "Delivering" && updateStatusAgentDto.Status == "Inactive")
+            {
+                throw new Exception("Cannot change status from 'Delivering' to 'Inactive'.");
+            }
+            else if (agent.Status == "Inactive" && updateStatusAgentDto.Status == "Delivering")
+            {
+                throw new Exception("Cannot change status from 'Inactive' to 'Delivering'.");
+            }
+
+            // Update the status if rules are not violated
+            agent.Status = updateStatusAgentDto.Status;
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            return agent;
+        }
+
+        // public Agent UpdateAgentStatus(int agentId, string newStatus)
+        // {
+        //     // Retrieve the agent from the database by Id
+        //     var agent = _context.Agents.FirstOrDefault(a => a.Id == agentId);
+        //
+        //     // Check if the agent exists
+        //     if (agent == null)
+        //     {
+        //         throw new Exception("Agent not found");
+        //     }
+        //
+        //     // Ensure the new status is valid
+        //     var validStatuses = new List<string> { "Active", "Inactive", "Delivering" };
+        //     if (!validStatuses.Contains(newStatus))
+        //     {
+        //         throw new Exception("Invalid status. Valid statuses are Active, Inactive, and Delivering.");
+        //     }
+        //
+        //     // Enforce the rule: if the agent is "Delivering", they cannot be set to "Inactive" or vice versa
+        //     if ((agent.Status == "Delivering" && newStatus == "Inactive") ||
+        //         (agent.Status == "Inactive" && newStatus == "Delivering"))
+        //     {
+        //         throw new Exception("An agent cannot be set to Inactive from Delivering or vice versa.");
+        //     }
+        //
+        //     // Update the agent's status
+        //     agent.Status = newStatus;
+        //
+        //     // Save changes to the database
+        //     _context.SaveChanges();
+        //
+        //     return agent;
+        // }
+
+        
+    }
 }

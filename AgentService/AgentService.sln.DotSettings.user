@@ -1,0 +1,9 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=fbf4a235_002D8a10_002D4d7b_002Db34f_002D3849f35ae3b8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="IntegrationTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::5FB30774-3DCB-43AC-9636-88498A26F6F9::net8.0::AgentServiceTests.IntegrationTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::5FB30774-3DCB-43AC-9636-88498A26F6F9::net8.0::AgentServiceTest.CustomerApiTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::5FB30774-3DCB-43AC-9636-88498A26F6F9::net8.0::AgentServiceTest.AgentAPITest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::5FB30774-3DCB-43AC-9636-88498A26F6F9::net8.0::AgentServiceTest.AgentApiTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
