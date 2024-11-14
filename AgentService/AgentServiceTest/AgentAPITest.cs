@@ -179,5 +179,59 @@ namespace AgentServiceTest
             var responseContent = await response.Content.ReadAsStringAsync();
             Assert.Contains("4.8", responseContent);
         }
+        
+        //Should get all agents
+        [Fact]
+        public async Task GetAllAgents_ShouldReturnAllAgents()
+        {
+            // Arrange - Create some test agents
+            var agentDto1 = new AgentDTO(0, "Agent1", 12345678, "12345", "", "Active", "Region1", 4.5, 10);
+            var agentDto2 = new AgentDTO(0, "Agent2", 87654321, "54321", "", "Inactive", "Region2", 3.2, 5);
+    
+            var createResponse1 = await _client.PostAsync("/api/AgentApi", GetStringContent(agentDto1));
+            var createResponse2 = await _client.PostAsync("/api/AgentApi", GetStringContent(agentDto2));
+    
+            createResponse1.EnsureSuccessStatusCode();
+            createResponse2.EnsureSuccessStatusCode();
+
+            // Act - Call the GetAllAgents endpoint
+            var response = await _client.GetAsync("/api/AgentApi/All");
+
+            // Assert - Ensure all agents are returned in response
+            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Assert.Contains("Agent1", responseContent);
+            Assert.Contains("Agent2", responseContent);
+        }
+        
+        //Should update agent status
+        [Fact]
+        public async Task UpdateAgentStatus_ShouldReturnSuccess()
+        {
+            // Arrange - Create a test agent
+            var agentDto = new AgentDTO(0, "Test Agent", 12345678, "12345", "", "Active", "Region1", 4.5, 10);
+            var createResponse = await _client.PostAsync("/api/AgentApi", GetStringContent(agentDto));
+            createResponse.EnsureSuccessStatusCode();
+
+            int agentId;
+            using (var scope = _factory.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var agent = await context.Agents.FirstOrDefaultAsync(a => a.Name == agentDto.Name);
+                agentId = agent.Id;
+            }
+
+            // Prepare the updated status DTO
+            var updateStatusDto = new UpdateStatusAgentDTO(agentId, "Inactive");
+
+            // Act - Call the UpdateAgentStatus endpoint
+            var response = await _client.PutAsync("/api/AgentApi/Status", GetStringContent(updateStatusDto));
+
+            // Assert - Ensure the agent status is updated
+            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Assert.Contains("Inactive", responseContent);
+        }
+
     }
 }

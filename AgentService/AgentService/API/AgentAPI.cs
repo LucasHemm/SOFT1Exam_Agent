@@ -92,5 +92,21 @@ namespace AgentService.API
                 return BadRequest(ex.Message);
             }
         }
+        
+        // GET: api/Agent
+        [HttpGet("All")]
+        public IActionResult GetAllAgents()
+        {
+            try
+            {
+                var agents = _agentFacade.GetAllAgents();
+                return Ok(agents);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
