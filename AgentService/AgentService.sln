@@ -3,9 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentService", "AgentService\AgentService.csproj", "{450D15A9-83E6-448D-AF3F-E1E8B30F214C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87563118-0823-4BB7-AC48-48CD2729AF9E}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentServiceTest", "AgentServiceTest\AgentServiceTest.csproj", "{5FB30774-3DCB-43AC-9636-88498A26F6F9}"
 EndProject

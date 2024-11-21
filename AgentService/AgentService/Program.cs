@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using AgentService.Facades;
+using Prometheus;
 
 namespace AgentService;
 
@@ -39,6 +40,10 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1"));
         }
+        
+        app.UseRouting();
+        app.UseMetricServer(); // Default /metrics endpoint
+        app.UseHttpMetrics(); // Enable HttpMetrics
 
         app.UseHttpsRedirection();
         app.UseAuthorization();

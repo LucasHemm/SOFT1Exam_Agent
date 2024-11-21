@@ -1,6 +1,0 @@
-﻿services:
-  agentservice:
-    image: agentservice
-    build:
-      context: .
-      dockerfile: AgentService/Dockerfile
