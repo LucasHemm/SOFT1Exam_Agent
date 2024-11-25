@@ -85,6 +85,7 @@ namespace AgentServiceTest
             var agentDto = new AgentDTO(0, "Test Agent", 12345678, "12345", "", "Active", "Region1", 4.5, 10);
             var response = await _client.PostAsync("/api/AgentApi", GetStringContent(agentDto));
             response.EnsureSuccessStatusCode();
+            
 
             using (var scope = _factory.Services.CreateScope())
             {
