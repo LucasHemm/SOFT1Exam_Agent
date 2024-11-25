@@ -23,6 +23,17 @@ public class Program
 // Enable Swagger/OpenAPI
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        
+        //cors
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
 
         var app = builder.Build();
 
@@ -53,6 +64,7 @@ public class Program
         app.UseMetricServer(); // Default /metrics endpoint
         app.UseHttpMetrics(); // Enable HttpMetrics
 
+        app.UseCors("AllowAll");
         app.UseAuthorization();
         app.MapControllers();
 

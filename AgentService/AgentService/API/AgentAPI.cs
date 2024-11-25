@@ -22,8 +22,7 @@ namespace AgentService.API
         {
             try
             {
-                _agentFacade.CreateAgent(agentDto);
-                return Ok("Agent created successfully");
+                return Ok(new AgentDTO(_agentFacade.CreateAgent(agentDto)));
             }
             catch (Exception ex)
             {
