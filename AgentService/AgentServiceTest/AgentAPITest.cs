@@ -174,7 +174,7 @@ namespace AgentServiceTest
                 agentId = agent.Id;
             }
 
-            var updateRatingDto = new UpdateRatingAgentDTO(agentId, 4.8, 20);
+            var updateRatingDto = new UpdateRatingDTO(agentId, 4.8, 20);
             var response = await _client.PutAsync("/api/AgentApi/Rating", GetStringContent(updateRatingDto));
             response.EnsureSuccessStatusCode();
             var responseContent = await response.Content.ReadAsStringAsync();

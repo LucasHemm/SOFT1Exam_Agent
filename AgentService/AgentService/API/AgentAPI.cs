@@ -64,11 +64,11 @@ namespace AgentService.API
         
         // PUT: api/Agent/Rating
         [HttpPut("Rating")]
-        public IActionResult UpdateAgentWithRating([FromBody] UpdateRatingAgentDTO updateRatingAgentDto)
+        public IActionResult UpdateAgentWithRating([FromBody] UpdateRatingDTO updateRatingDto)
         {
             try
             {
-                var updatedAgent = _agentFacade.UpdateAgentWithRating(updateRatingAgentDto);
+                var updatedAgent = _agentFacade.UpdateAgentWithRating(updateRatingDto);
                 return Ok(new AgentDTO(updatedAgent)); // Return the updated agent for verification
             }
             catch (Exception ex)
