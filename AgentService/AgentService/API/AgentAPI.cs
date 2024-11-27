@@ -38,7 +38,7 @@ namespace AgentService.API
             try
             {
                 var updatedAgent = _agentFacade.UpdateAgent(agentDto);
-                return Ok(updatedAgent); // Return the updated agent for verification
+                return Ok(new AgentDTO(updatedAgent)); // Return the updated agent for verification
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace AgentService.API
             try
             {
                 var agent = _agentFacade.GetAgent(id);
-                return Ok(agent);
+                return Ok(new AgentDTO(agent));
             }
             catch (Exception ex)
             {
@@ -69,7 +69,7 @@ namespace AgentService.API
             try
             {
                 var updatedAgent = _agentFacade.UpdateAgentWithRating(updateRatingAgentDto);
-                return Ok(updatedAgent); // Return the updated agent for verification
+                return Ok(new AgentDTO(updatedAgent)); // Return the updated agent for verification
             }
             catch (Exception ex)
             {
@@ -84,7 +84,7 @@ namespace AgentService.API
             try
             {
                 var updatedAgent = _agentFacade.UpdateAgentStatus(updateStatusAgentDto);
-                return Ok(updatedAgent); // Return the updated agent for verification
+                return Ok(new AgentDTO(updatedAgent)); // Return the updated agent for verification
             }
             catch (Exception ex)
             {

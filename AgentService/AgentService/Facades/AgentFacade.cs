@@ -13,19 +13,7 @@ namespace AgentService.Facades
             _context = context;
         }
 
-        // public Agent CreateAgent(AgentDTO agentDto)
-        // {
-        //     if (string.IsNullOrWhiteSpace(agentDto.Name) || string.IsNullOrWhiteSpace(agentDto.Region) || agentDto.PhoneNumber == 0)
-        //     {
-        //         throw new Exception("All mandatory fields (Name, PhoneNumber, Region) must be provided.");
-        //     }
-        //
-        //     Agent agent = new Agent(agentDto);
-        //     _context.Agents.Add(agent);
-        //     _context.SaveChanges();
-        //     return agent;
-        // }
-        
+
         public Agent CreateAgent(AgentDTO agentDto)
         {
             if (string.IsNullOrWhiteSpace(agentDto.Name) || string.IsNullOrWhiteSpace(agentDto.Region) || agentDto.PhoneNumber == 0)
