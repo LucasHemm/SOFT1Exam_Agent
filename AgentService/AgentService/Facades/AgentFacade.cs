@@ -78,10 +78,10 @@ namespace AgentService.Facades
             return agent;
         }
 
-        public Agent UpdateAgentWithRating(UpdateRatingAgentDTO updateRatingAgentDto)
+        public Agent UpdateAgentWithRating(UpdateRatingDTO updateRatingDto)
         {
             // Retrieve the agent from the database by Id
-            var agent = _context.Agents.FirstOrDefault(a => a.Id == updateRatingAgentDto.Id);
+            var agent = _context.Agents.FirstOrDefault(a => a.Id == updateRatingDto.Id);
 
             // Check if the agent exists
             if (agent == null)
@@ -90,8 +90,8 @@ namespace AgentService.Facades
             }
 
             // Update only the allowed properties
-            agent.Rating = updateRatingAgentDto.Rating;
-            agent.NumberOfRatings = updateRatingAgentDto.NumberOfRatings;
+            agent.Rating = updateRatingDto.Rating;
+            agent.NumberOfRatings = updateRatingDto.NumberOfRatings;
 
             // Save changes to the database
             _context.SaveChanges();

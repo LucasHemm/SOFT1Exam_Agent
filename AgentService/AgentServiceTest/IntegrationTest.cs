@@ -177,14 +177,14 @@ namespace AgentServiceTests
                 var agent = agentFacade.CreateAgent(agentDto);
 
                 // Update the agent rating
-                UpdateRatingAgentDTO updateRatingAgentDto = new UpdateRatingAgentDTO
+                UpdateRatingDTO updateRatingDto = new UpdateRatingDTO
                 {
                     Id = agent.Id,
                     Rating = 4.8,
                     NumberOfRatings = 200
                 };
 
-                var updatedAgent = agentFacade.UpdateAgentWithRating(updateRatingAgentDto);
+                var updatedAgent = agentFacade.UpdateAgentWithRating(updateRatingDto);
                 var retrievedAgent = context.Agents.Find(agent.Id);
 
                 Assert.NotNull(retrievedAgent);
